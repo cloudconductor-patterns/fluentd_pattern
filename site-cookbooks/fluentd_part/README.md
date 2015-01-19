@@ -8,7 +8,7 @@ For more information, please visit README.md of fluentd_pattern.
 Copyright and License
 =====================
 
-Copyright 2014 TIS inc.
+Copyright 2015 TIS inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
