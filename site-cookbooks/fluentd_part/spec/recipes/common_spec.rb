@@ -8,7 +8,17 @@ describe 'fluentd_part::common' do
   end
 
   it 'create config dir' do
+    allow(File).to receive(:exist?).and_return(false)
     expect(chef_run).to create_directory('/etc/td-agent/config.d').with(
+      owner: 'td-agent',
+      group: 'td-agent',
+      mode: 0755
+    )
+  end
+
+  it 'not create config dir' do
+    allow(File).to receive(:exist?).and_return(true)
+    expect(chef_run).not_to create_directory('/etc/td-agent/config.d').with(
       owner: 'td-agent',
       group: 'td-agent',
       mode: 0755
@@ -20,5 +30,5 @@ describe 'fluentd_part::common' do
       source: 'td-agent',
       mode: 0755
     )
-  )
+  end
 end
