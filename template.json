@@ -134,7 +134,8 @@
         "GroupDescription" : "Enable td-agent access",
         "VpcId" : { "Ref" : "VpcId" },
         "SecurityGroupIngress" : [
-          {"IpProtocol" : "tcp", "FromPort" : "24224", "ToPort" : "24224", "CidrIp" : "10.0.0.0/16"}
+          {"IpProtocol" : "tcp", "FromPort" : "24224", "ToPort" : "24224", "CidrIp" : "10.0.0.0/16"},
+          {"IpProtocol" : "udp", "FromPort" : "24224", "ToPort" : "24224", "CidrIp" : "10.0.0.0/16"}
         ]
       }
     },
