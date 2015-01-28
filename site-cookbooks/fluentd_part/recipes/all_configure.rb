@@ -5,7 +5,7 @@ log_servers_info = server_info('log')
 include_recipe 'fluentd_part::common'
 roles = ENV['ROLE'].split(',').unshift('all')
 
-log_collection_config = {}
+log_collection_config = node['fluentd_part']['client']['target']
 Dir.glob("/opt/cloudconductor/patterns/*/").each do |pattern_dir|
   log_colleciton_file = File.join(pattern_dir, 'config', 'log_collection.yml')
   next unless File.exist?(log_colleciton_file)
