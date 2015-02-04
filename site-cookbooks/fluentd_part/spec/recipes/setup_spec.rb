@@ -15,5 +15,4 @@ describe 'fluentd_part::setup' do
       mode: 0755
     )
   end
-
 end

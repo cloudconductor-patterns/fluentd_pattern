@@ -1,25 +1,26 @@
-<%
-@log_collection_config.each do |role, log_paths|
-  log_paths.each do |log_path|
-    log_filename = File.basename(log_path)
-%>
+<% @log_collection_config.each do |role, log_paths| %>
+  <% log_paths.each do |log_path| %>
 <source>
-  type tail_ex
+  type tail
   path <%= log_path %>
   tag log.<%= role %>.__HOSTNAME__.*
   format none
-  pos_file <%= @node['fluentd_part']['client']['pos_file'] %>
+  pos_file <%= @pos_file %>
   refresh_interval <%= @node['fluentd_part']['client']['refresh_interval'] %>
 </source>
-<%
-  end
-end
-%>
 
-<%
-roles = ENV['ROLE'].split(',')
-unless roles.include?('log')
-%>
+  <% end %>
+<% end %>
+<source>
+  type tail
+  path /var/log/td-agent/td-agent.log*
+  tag log.all.__HOSTNAME__.*
+  format none
+  pos_file <%= @pos_file %>
+  refresh_interval <%= @node['fluentd_part']['client']['refresh_interval'] %>
+</source>
+<% unless @roles.include?('log') %>
+
 <match log.**>
   type forward
   <% @log_servers_info.each do |log_server_info| %>

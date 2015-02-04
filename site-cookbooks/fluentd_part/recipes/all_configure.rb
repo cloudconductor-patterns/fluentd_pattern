@@ -1,17 +1,27 @@
-require 'active_support'
 ::Chef::Recipe.send(:include, CloudConductor::CommonHelper)
 log_servers_info = server_info('log')
 
-include_recipe 'fluentd_part::common'
-roles = ENV['ROLE'].split(',').unshift('all')
+directory node['fluentd_part']['client']['pos_dir'] do
+  owner 'td-agent'
+  group 'td-agent'
+  mode 0755
+  recursive true
+  action :create
+  not_if { File.exist?(node['fluentd_part']['client']['pos_dir']) }
+end
 
-log_collection_config = node['fluentd_part']['client']['target']
-Dir.glob("/opt/cloudconductor/patterns/*/").each do |pattern_dir|
-  log_colleciton_file = File.join(pattern_dir, 'config', 'log_collection.yml')
+include_recipe 'fluentd_part::common'
+
+log_collection_config = {}
+Dir.glob(File.join(node['fluentd_part']['client']['patterns_dir'], '*')).each do |pattern_dir|
+  log_colleciton_file = File.join(pattern_dir, node['fluentd_part']['client']['log_config_file'])
   next unless File.exist?(log_colleciton_file)
-  log_collection_config = log_collection_config.merge((YAML.load_file(log_colleciton_file).slice(*roles))) do |_, v1, v2|
-    (v1 + v2).uniq
-  end
+  ::Chef::Mixin::DeepMerge.deep_merge!(YAML.load_file(log_colleciton_file), log_collection_config)
+end
+::Chef::Mixin::DeepMerge.deep_merge!(node['fluentd_part']['client']['target'], log_collection_config)
+roles = ENV['ROLE'].split(',').unshift('all')
+log_collection_config.select! do |key|
+  key if roles.include?(key)
 end
 
 template '/etc/td-agent/config.d/client.conf' do
@@ -20,8 +30,13 @@ template '/etc/td-agent/config.d/client.conf' do
   source 'client.conf.erb'
   mode 0755
   variables(
+    roles: roles,
     log_collection_config: log_collection_config,
-    log_servers_info: log_servers_info
+    log_servers_info: log_servers_info,
+    pos_file: File.join(
+      node['fluentd_part']['client']['pos_dir'],
+      node['fluentd_part']['client']['pos_file']
+    )
   )
   notifies :restart, 'service[td-agent]', :delayed
 end
