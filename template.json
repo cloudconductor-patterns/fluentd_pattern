@@ -111,7 +111,7 @@
     "LogNetworkInterface" : {
       "Type" : "AWS::EC2::NetworkInterface",
       "Properties" : {
-        "GroupSet" : [{"Ref" : "LogSecurityGroup"}],
+        "GroupSet" : [{"Ref" : "SharedSecurityGroup"}, {"Ref" : "LogSecurityGroup"}],
         "SubnetId" : { "Ref" : "SubnetId" }
       }
     },
@@ -137,6 +137,26 @@
           {"IpProtocol" : "tcp", "FromPort" : "24224", "ToPort" : "24224", "CidrIp" : "10.0.0.0/16"},
           {"IpProtocol" : "udp", "FromPort" : "24224", "ToPort" : "24224", "CidrIp" : "10.0.0.0/16"}
         ]
+      }
+    },
+    "SharedSecurityGroupInboundRuleFluentd": {
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties":{
+        "IpProtocol": "tcp",
+        "FromPort": "24224",
+        "ToPort": "24224",
+        "SourceSecurityGroupId": { "Ref" : "LogSecurityGroup" },
+        "GroupId": { "Ref" : "SharedSecurityGroup" }
+      }
+    },
+    "SharedSecurityGroupInboundRuleHeartbeat": {
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties":{
+        "IpProtocol": "udp",
+        "FromPort": "24224",
+        "ToPort": "24224",
+        "SourceSecurityGroupId": { "Ref" : "LogSecurityGroup" },
+        "GroupId": { "Ref" : "SharedSecurityGroup" }
       }
     },
     "LogWaitHandle" : {
