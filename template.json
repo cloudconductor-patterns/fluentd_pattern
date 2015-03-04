@@ -20,12 +20,12 @@
       "AllowedPattern" : "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
       "ConstraintDescription" : "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
-    "logInstanceType" : {
+    "LogInstanceType" : {
       "Description" : "LogServer instance type",
       "Type" : "String",
       "Default" : "t2.small"
     },
-    "logImageId" : {
+    "LogImageId" : {
       "Description" : "[computed] LogServer Image Id. This parameter is automatically filled by CloudConductor.",
       "Type" : "String"
     },
@@ -71,8 +71,8 @@
         "Role" : "log"
       },
       "Properties" : {
-        "ImageId" : { "Ref" : "logImageId" },
-        "InstanceType" : { "Ref" : "logInstanceType" },
+        "ImageId" : { "Ref" : "LogImageId" },
+        "InstanceType" : { "Ref" : "LogInstanceType" },
         "KeyName" : { "Ref" : "KeyName" },
         "NetworkInterfaces" : [{
            "DeviceIndex" : "0",
