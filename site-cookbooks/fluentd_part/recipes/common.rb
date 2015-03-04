@@ -1,3 +1,8 @@
+cookbook_file '/etc/sysconfig/td-agent' do
+  source 'td-agent'
+  mode 0755
+end
+
 include_recipe 'td-agent'
 r = resources(template: '/etc/td-agent/td-agent.conf')
 r.cookbook 'fluentd_part'
@@ -9,9 +14,4 @@ directory '/etc/td-agent/config.d' do
   recursive true
   action :create
   not_if { File.exist?('/etc/td-agent/config.d') }
-end
-
-cookbook_file '/etc/init.d/td-agent' do
-  source 'td-agent'
-  mode 0755
 end
