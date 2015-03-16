@@ -110,6 +110,7 @@
     "LogNetworkInterface" : {
       "Type" : "AWS::EC2::NetworkInterface",
       "Properties" : {
+        "AssociatePublicIpAddress" : true,
         "GroupSet" : [{"Ref" : "SharedSecurityGroup"}, {"Ref" : "LogSecurityGroup"}],
         "SubnetId" : { "Ref" : "SubnetId" }
       }
