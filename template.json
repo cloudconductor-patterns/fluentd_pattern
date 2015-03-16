@@ -72,6 +72,7 @@
         "InstanceType" : { "Ref" : "LogInstanceType" },
         "KeyName" : { "Ref" : "KeyName" },
         "NetworkInterfaces" : [{
+           "AssociatePublicIpAddress" : true,
            "DeviceIndex" : "0",
            "NetworkInterfaceId" : { "Ref" : "LogNetworkInterface" }
         }],
@@ -110,7 +111,6 @@
     "LogNetworkInterface" : {
       "Type" : "AWS::EC2::NetworkInterface",
       "Properties" : {
-        "AssociatePublicIpAddress" : true,
         "GroupSet" : [{"Ref" : "SharedSecurityGroup"}, {"Ref" : "LogSecurityGroup"}],
         "SubnetId" : { "Ref" : "SubnetId" }
       }
