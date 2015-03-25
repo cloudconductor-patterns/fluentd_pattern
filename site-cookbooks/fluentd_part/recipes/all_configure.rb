@@ -20,7 +20,7 @@ end
 
 parameters = CloudConductorUtils::Consul.read_parameters[:cloudconductor]
 applications = parameters[:applications] || {}
-deploy_log_collection_config = applications.inject({}) do |result, (application_name, application)|
+deploy_log_collection_config = applications.inject({}) do |result, (_application_name, application)|
   next result if application[:parameters].nil? || application[:parameters][:log_collection].nil?
   application_config = application[:parameters][:log_collection].inject({}) do |role_config, (role, paths)|
     ::Chef::Mixin::DeepMerge.deep_merge!(
