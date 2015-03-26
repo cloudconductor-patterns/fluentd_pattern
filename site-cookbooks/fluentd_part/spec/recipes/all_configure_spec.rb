@@ -1,10 +1,22 @@
 require_relative '../spec_helper'
+require 'cloud_conductor_utils/consul'
 
 describe 'fluentd_part::all_configure' do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+  let(:cloudconductor_parameters) do
+    {
+      cloudconductor: {
+        applications: {
+          sample_app: {
+          }
+        }
+      }
+    }
+  end
 
   before do
     ENV['ROLE'] = 'web'
+    allow(CloudConductorUtils::Consul).to receive(:read_parameters).and_return(cloudconductor_parameters)
   end
 
   it 'create pos_dir' do
