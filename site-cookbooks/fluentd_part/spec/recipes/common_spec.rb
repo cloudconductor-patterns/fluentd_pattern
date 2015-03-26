@@ -24,11 +24,4 @@ describe 'fluentd_part::common' do
       mode: 0755
     )
   end
-
-  it 'install td-agent init file' do
-    expect(chef_run).to create_cookbook_file('/etc/init.d/td-agent').with(
-      source: 'td-agent',
-      mode: 0755
-    )
-  end
 end

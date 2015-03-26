@@ -3,6 +3,10 @@ require_relative '../spec_helper'
 describe 'fluentd_part::all_configure' do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
+  before do
+    ENV['ROLE'] = 'web'
+  end
+
   it 'create pos_dir' do
     allow(File).to receive(:exist?).and_return(false)
     expect(chef_run).to create_directory('/var/log/td-agent/pos').with(
