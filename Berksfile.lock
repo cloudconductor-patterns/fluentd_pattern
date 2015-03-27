@@ -1,0 +1,16 @@
+DEPENDENCIES
+  cloudconductor
+    path: site-cookbooks/cloudconductor
+  fluentd_part
+    path: site-cookbooks/fluentd_part
+
+GRAPH
+  apt (2.6.1)
+  cloudconductor (0.0.1)
+  fluentd_part (0.0.1)
+    cloudconductor (>= 0.0.0)
+    td-agent (>= 0.0.0)
+  td-agent (2.0.0)
+    apt (>= 0.0.0)
+    yum (>= 0.0.0)
+  yum (3.5.3)

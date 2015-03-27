@@ -1,0 +1,9 @@
+{
+  "name": "log_setup",
+  "description": "Setups fluentd",
+  "chef_type": "role",
+  "json_class":"Chef::Role",
+  "run_list": [
+    "recipe[fluentd_part::setup]"
+  ]
+}
