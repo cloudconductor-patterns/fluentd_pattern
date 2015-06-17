@@ -18,7 +18,7 @@ log_collection_config = Dir.glob(patterns_dir).inject({}) do |result, pattern_di
   ::Chef::Mixin::DeepMerge.deep_merge!(YAML.load_file(log_colleciton_file), result)
 end
 
-parameters = CloudConductorUtils::Consul.read_parameters[:cloudconductor]
+parameters = node['cloudconductor']
 applications = parameters[:applications] || {}
 deploy_log_collection_config = applications.inject({}) do |result, (_application_name, application)|
   next result if application[:parameters].nil? || application[:parameters][:log_collection].nil?

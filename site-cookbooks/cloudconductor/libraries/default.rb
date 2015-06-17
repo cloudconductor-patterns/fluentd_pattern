@@ -13,18 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'cloud_conductor_utils/consul'
 
 module CloudConductor
   module CommonHelper
     def server_info(role)
-      all_servers = CloudConductorUtils::Consul.read_servers
+      all_servers = node['cloudconductor']['servers']
       servers = all_servers.select do |_hostname, server|
         server[:roles].include?(role)
       end
       result = servers.map do |hostname, server|
-        server[:hostname] = hostname
-        server
+        copy = Hash.new.merge(server)
+        copy[:hostname] = hostname
+        copy
       end
       result
     end
