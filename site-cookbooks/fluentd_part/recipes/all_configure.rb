@@ -34,7 +34,10 @@ deploy_log_collection_config = applications.inject({}) do |result, (_application
 end
 ::Chef::Mixin::DeepMerge.deep_merge!(deploy_log_collection_config, log_collection_config)
 ::Chef::Mixin::DeepMerge.deep_merge!(node['fluentd_part']['client']['target'], log_collection_config)
-roles = ENV['ROLE'].split(',').unshift('all')
+
+roles = [] + (node['fluentd_part']['roles'] || [])
+roles = ENV['ROLE'].split(',') if ENV['ROLE']
+roles.unshift('all')
 log_collection_config.select! do |key|
   key if roles.include?(key)
 end

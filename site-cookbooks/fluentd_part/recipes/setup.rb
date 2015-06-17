@@ -8,7 +8,8 @@ template '/etc/td-agent/config.d/server.conf' do
   notifies :restart, 'service[td-agent]', :delayed
 end
 
-roles = ENV['ROLE'].split(',')
+roles = [] + (node['fluentd_part']['roles'] || [])
+roles = ENV['ROLE'].split(',') if ENV['ROLE']
 directory node['fluentd_part']['server']['store_dir'] do
   mode 0755
   recursive true
