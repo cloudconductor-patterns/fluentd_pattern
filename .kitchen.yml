@@ -1,0 +1,42 @@
+---
+driver:
+  name: docker
+  cc_pattern: "<%= File.basename(Dir.pwd) %>"
+
+provisioner:
+  name: chef_solo
+  attributes:
+    cloudconductor:
+      servers:
+        log_sv:
+          roles: 'log'
+          private_ip: '10.0.0.1'
+      applications:
+        jpetstore:
+          type: 'dynamic'
+          protocol: 'http'
+          url: ''
+    fluentd_part:
+      roles:
+        - web
+
+platforms:
+  - name: centos-6
+    driver:
+      dockerfile: test/platforms/centos-6/Dockerfile
+
+suites:
+  - name: log_setup
+    run_list:
+      - role[log_setup]
+
+  - name: all_configure
+    run_list:
+      - role[all_configure]
+    attributes:
+
+  - name: all_deploy
+    run_list:
+      - role[all_configure]
+      - role[all_deploy]
+    attributes:
