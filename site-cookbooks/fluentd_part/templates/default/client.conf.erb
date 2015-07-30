@@ -1,7 +1,7 @@
 <% @log_collection_config.each do |role, log_paths| %>
   <% log_paths.each do |log_path| %>
 <source>
-  type tail
+  type tail_ex
   path <%= log_path %>
   tag log.<%= role %>.__HOSTNAME__.*
   format none
@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 <source>
-  type tail
+  type tail_ex
   path /var/log/td-agent/td-agent.log*
   tag log.all.__HOSTNAME__.*
   format none
