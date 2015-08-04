@@ -1,7 +1,7 @@
 include_attribute 'td-agent'
 default['td_agent']['plugins'] = [
   'forest',
-  'tail-ex'
+  'config-expander'
 ]
 default['td_agent']['pinning_version'] = true
 default['td_agent']['version'] = '2.1.5-1'
