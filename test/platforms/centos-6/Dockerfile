@@ -54,7 +54,7 @@ RUN echo 'git checkout feature/unused-ruby' >> ./bootstrap.sh
 RUN echo 'git pull' >> ./bootstrap.sh
 RUN echo 'export PATTERN_NAME="<%= @cc_pattern %>"' >> ./bootstrap.sh
 RUN echo 'export PATTERN_URL="https://github.com/cloudconductor-patterns/<%= @cc_pattern %>.git"' >> ./bootstrap.sh
-RUN echo 'export PATTERN_REVISION="develop"' >> ./bootstrap.sh
+RUN echo 'export PATTERN_REVISION="master"' >> ./bootstrap.sh
 RUN echo 'export ROLE="<%= @cc_role %>"' >> ./bootstrap.sh
 RUN echo 'export CONSUL_SECRET_KEY="<%= @cc_token %>"' >> ./bootstrap.sh
 #RUN echo 'chef-solo -j ./etc/node_setup.json -c ./etc/solo.rb' >> ./bootstrap.sh
