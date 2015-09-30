@@ -3,7 +3,7 @@ maintainer:       "TIS Inc."
 maintainer_email: "ccndctr@gmail.com"
 license:          "Apache v2.0"
 description:      "CloudConductor optional pattern for Fluentd"
-version:          "0.0.1"
+version:          "1.1.0"
 url:              "https://github.com/cloudconductor-patterns/fluentd_pattern"
 
 type:      "optional"
