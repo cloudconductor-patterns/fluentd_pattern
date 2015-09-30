@@ -5,12 +5,12 @@ DEPENDENCIES
     path: site-cookbooks/fluentd_part
 
 GRAPH
-  apt (2.6.1)
+  apt (2.7.0)
   cloudconductor (0.0.1)
   fluentd_part (0.0.1)
     cloudconductor (>= 0.0.0)
     td-agent (>= 0.0.0)
-  td-agent (2.0.0)
+  td-agent (2.1.0)
     apt (>= 0.0.0)
     yum (>= 0.0.0)
-  yum (3.5.3)
+  yum (3.6.3)

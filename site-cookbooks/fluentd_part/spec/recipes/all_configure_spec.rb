@@ -1,8 +1,7 @@
 require_relative '../spec_helper'
-require 'cloud_conductor_utils/consul'
 
 describe 'fluentd_part::all_configure' do
-  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.new }
   let(:cloudconductor_parameters) do
     {
       cloudconductor: {
@@ -16,7 +15,20 @@ describe 'fluentd_part::all_configure' do
 
   before do
     ENV['ROLE'] = 'web'
-    allow(CloudConductorUtils::Consul).to receive(:read_parameters).and_return(cloudconductor_parameters)
+    chef_run.node.set['cloudconductor'] = {
+      servers: {
+        log_server: {
+          roles: 'log',
+          private_ip: '10.0.0.1'
+        }
+      },
+      applications: {
+        sample_app: {
+        }
+      }
+    }
+
+    chef_run.converge(described_recipe)
   end
 
   it 'create pos_dir' do
