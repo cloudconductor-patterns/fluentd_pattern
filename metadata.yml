@@ -15,7 +15,7 @@ providers:
       - cloud_formation
       - terraform
     openstack:
-      - terraform
+      - cloud_formation
 
 supports:
   - platform: "centos"
