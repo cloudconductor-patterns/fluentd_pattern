@@ -49,3 +49,7 @@ resource "aws_instance" "log_server" {
 output "cluster_addresses" {
   value = "${aws_instance.log_server.private_ip}"
 }
+
+output "frontend_addresses" {
+  value = "${aws_instance.log_server.public_ip}"
+}
