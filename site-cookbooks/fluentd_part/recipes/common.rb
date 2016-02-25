@@ -1,9 +1,3 @@
-execute "yum-update" do
-  user "root"
-  command "yum -y update"
-  action :run
-end
-
 yum_package 'initscripts'
 
 cookbook_file '/etc/sysconfig/td-agent' do

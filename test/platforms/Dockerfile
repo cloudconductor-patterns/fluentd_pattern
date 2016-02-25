@@ -111,3 +111,21 @@ RUN echo "export http_proxy=<%= @http_proxy %>" >> /etc/profile.d/proxy.sh
 RUN echo "export https_proxy=<%= @http_proxy %>" >> /etc/profile.d/proxy.sh
 <% end %>
 <% end %>
+
+
+<% if @image == 'centos:centos7' %>
+RUN yum update -y
+
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i ==  systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+rm -f /lib/systemd/system/multi-user.target.wants/*;\
+rm -f /etc/systemd/system/*.wants/*;\
+rm -f /lib/systemd/system/local-fs.target.wants/*; \
+rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+rm -f /lib/systemd/system/basic.target.wants/*;\
+rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+RUN /bin/systemctl set-default multi-user.target
+RUN /bin/systemctl enable sshd
+RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+<% end %>
