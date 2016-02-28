@@ -32,6 +32,9 @@ tasks:
     description: Execute setup chef
     operations:
       - execute:
+          script: |
+            gem install activesupport
+      - execute:
           file: prepare.sh
       - chef:
           run_list:
