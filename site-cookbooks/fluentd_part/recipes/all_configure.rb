@@ -1,6 +1,8 @@
 ::Chef::Recipe.send(:include, CloudConductor::CommonHelper)
 log_servers_info = server_info('log')
 
+include_recipe 'fluentd_part::common'
+
 directory node['fluentd_part']['client']['pos_dir'] do
   owner 'td-agent'
   group 'td-agent'
@@ -10,7 +12,6 @@ directory node['fluentd_part']['client']['pos_dir'] do
   not_if { File.exist?(node['fluentd_part']['client']['pos_dir']) }
 end
 
-include_recipe 'fluentd_part::common'
 patterns_dir = File.join(node['fluentd_part']['client']['patterns_dir'], '*')
 log_collection_config = Dir.glob(patterns_dir).inject({}) do |result, pattern_dir|
   log_colleciton_file = File.join(pattern_dir, node['fluentd_part']['client']['log_config_file'])
