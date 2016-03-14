@@ -1,3 +1,5 @@
+yum_package 'initscripts'
+
 cookbook_file '/etc/sysconfig/td-agent' do
   source 'td-agent'
   mode 0755
