@@ -21,5 +21,5 @@ Documentation:
 Style/RegexpLiteral:
   Enabled: false
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
