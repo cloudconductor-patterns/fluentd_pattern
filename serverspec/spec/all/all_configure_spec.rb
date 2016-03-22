@@ -7,7 +7,7 @@ end
 describe 'connect td-agent' do
   servers = property[:servers]
 
-  servers.each do |_, server|
+  servers.each do |svr_name, server|
     next unless server[:roles].include?('log')
     describe "#{svr_name} access check" do
       describe host(server[:private_ip]) do
