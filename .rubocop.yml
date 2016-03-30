@@ -18,8 +18,11 @@ AsciiComments:
 Documentation:
   Enabled: false
 
+Style/NumericLiterals:
+  Enabled: false
+
 Style/RegexpLiteral:
   Enabled: false
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false

@@ -1,6 +1,7 @@
 ---
 driver:
   name: docker
+  dockerfile: test/platforms/Dockerfile
   cc_pattern: "<%= File.basename(Dir.pwd) %>"
 
 provisioner:
@@ -21,9 +22,15 @@ provisioner:
         - web
 
 platforms:
-  - name: centos-6
+  - name: centos-6.6
     driver:
-      dockerfile: test/platforms/centos-6/Dockerfile
+      image: centos:centos6.6
+      run_command: "/sbin/init"
+  - name: centos-7
+    driver:
+      privileged: true
+      image: centos:centos7
+      run_command: "/sbin/init"
 
 suites:
   - name: log_setup
